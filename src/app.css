@@ -3,11 +3,34 @@
 /* --- Semantic Tokens --- */
 :root {
 	--bg: white;
-    --bg-active: lightgrey; 
-	--text: black;
-	--surface: rgba(15, 23, 42, 0.04);
+	--bg-active: lightgrey;
+	--bg-aside: #e8f0ff;
+	--bg-profile: blue;
+	--bg-card: lightblue;
+	--text: #0f172a;
+	--accent: #2563eb;
+	--surface: rgba(14, 67, 192, 0.04);
 	--border: rgba(15, 23, 42, 0.08);
+
+	/* Card tokens (semantic & adjustable) */
+	--card-bg: #f8fbff;
+	--bg-card: var(--card-bg);
+	--card-foreground: #071024;
+	--card-accent: var(--accent);
+	--card-border-color: rgba(15, 23, 42, 0.06);
+	--card-border-width: 1px;
+	/* Special card border: diagonal gradient (pink -> blue) */
+	--border-card: linear-gradient(135deg, rgba(255, 209, 232, 1) 0%, rgba(207, 231, 255, 1) 100%);
+	--border-card-hover: linear-gradient(135deg, rgba(255, 209, 232, 1) 0%, rgba(160, 210, 255, 1) 100%);
+	--card-shadow: 0 8px 20px -8px rgba(15, 23, 42, 0.06);
+	--card-shadow-hover: 0 20px 40px -12px rgba(15, 23, 42, 0.09);
 	--shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.08);
+
+	/* Layout tokens */
+	--header-height: 64px;
+	--aside-width: 240px;
+	--radius: 8px;
+	--gap: 1rem;
 }
 
 html,
@@ -17,6 +40,7 @@ body,
 	min-height: 100vh;
 	margin: 0;
 }
+
 body {
 	background: var(--bg);
 	color: var(--text);
