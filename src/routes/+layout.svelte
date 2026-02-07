@@ -127,11 +127,9 @@
 	}
 	/* Main content */
 	main {
+		
+		
 		padding: 1.5rem;
-		background: var(--bg);
-		min-height: 0;
-		box-sizing: border-box;
-		flex: 1 1 auto;
 		overflow: auto;
 	
 	}

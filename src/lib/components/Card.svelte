@@ -22,8 +22,8 @@
 		border-radius: var(--radius);
 		box-shadow: var(--card-shadow, var(--shadow));
 
-		width: 200px;
-		height: minmax(100px, auto);
+		width: 350px;
+		height:575px; ;
 
 		/* Smooth, subtle scale on hover */
 		transform-origin: center;

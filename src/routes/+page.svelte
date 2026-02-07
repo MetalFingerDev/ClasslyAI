@@ -1,15 +1,11 @@
+
 <script>
-	import Card from '$lib/components/Card.svelte';
+  import Card from '$lib/components/Card.svelte'
 </script>
 
-<section>
+<section> 
 	<Card title="TO-DO" description="check out hwat you have left to do" />
-
-	<Card title="Announcements" description="Latest class news and updates" />
-	<Card title="Grades" description="View your recent grades and feedback" />
-	<Card title="Calendar" description="Upcoming due dates and events" />
-	<Card title="Resources" description="Course materials and helpful links" />
-	<Card title="Messages" description="Communicate with instructors and classmates" />
+    <Card title="Announcements" description="Latest class news and updates" />
 	<Card title="Schedule" description="Your weekly timetable and office hours" />
 </section>
 
@@ -20,4 +16,4 @@
 		gap: 1rem;
 		padding: 1rem;
 	}
-</style>
+</style>	
