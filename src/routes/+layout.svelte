@@ -9,7 +9,7 @@
 </svelte:head>
 
 <nav>
-	<div class="nav-links">
+	<div>
 		<a href="/">Home</a>
 		<a href="/about">About</a>
 	</div>
@@ -23,23 +23,23 @@
 	nav {
 		display: flex;
 		justify-content: space-between; /* Pushes links to left, profile to right */
-		align-items: center; 
+		align-items: center;
 	}
 
-	.nav-links {
+	div {
 		display: flex;
 		gap: 1rem; /* Space between links */
 	}
 
 	/* Rectangle styling for links */
-	.nav-links a {
+	div a {
 		text-decoration: none;
 		color: black;
 		padding: 0.5rem 1rem;
 		display: inline-block;
 	}
 
-	.nav-links a:hover {
+	div a:hover {
 		background-color: #d0d0d0;
 	}
 
@@ -51,7 +51,7 @@
 		background-color: #555;
 		display: inline-block;
 	}
-	
+
 	.profile-btn:hover {
 		background-color: #333;
 	}
