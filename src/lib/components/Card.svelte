@@ -14,18 +14,25 @@
 
 <style>
 	article {
-		background: var(--border-card);
+		background:
+			linear-gradient(var(--card-bg), var(--card-bg)) padding-box,
+			var(--border-card) border-box;
+		border: 1px solid transparent;
 		border-radius: var(--radius);
-		padding: 1px;
 		box-shadow: var(--card-shadow);
 		transition:
 			box-shadow var(--transition-speed),
 			transform var(--transition-speed);
 		flex: 1;
 		min-width: 200px;
+		display: flex;
+		flex-direction: column;
+		overflow: hidden;
 	}
 	article:hover {
-		background: var(--border-card-hover);
+		background:
+			linear-gradient(var(--card-bg), var(--card-bg)) padding-box,
+			var(--border-card-hover) border-box;
 		box-shadow: var(--card-shadow-hover);
 		transform: translateY(-2px);
 	}
@@ -35,18 +42,12 @@
 		padding: var(--gap) var(--gap) 0.5rem;
 		font-weight: 600;
 		color: var(--card-foreground);
-		background: var(--card-bg);
-		border-radius: 11px 11px 0 0;
+		border-bottom: 1px solid var(--border);
 	}
 
 	div {
-		background: var(--card-bg);
 		padding: var(--gap);
 		color: var(--card-foreground);
-		border-radius: 0 0 11px 11px;
-	}
-
-	article:not(:has(h3)) div {
-		border-radius: 11px;
+		flex: 1;
 	}
 </style>

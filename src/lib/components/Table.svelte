@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 	import { SvelteSet } from 'svelte/reactivity';
+	import Dropdown from '$lib/components/Dropdown.svelte';
 
 	interface Column {
 		key: string;
@@ -102,6 +103,11 @@
 
 	function handlePageSizeChange(e: Event) {
 		pageSize = Number((e.target as HTMLSelectElement).value);
+		currentPage = 0;
+	}
+
+	function handleDropdownChange(value: string) {
+		pageSize = Number(value);
 		currentPage = 0;
 	}
 </script>
@@ -225,13 +231,13 @@
 				<div class="pagination">
 					<div class="page-size">
 						<span>Rows per page</span>
-						<select class="select" value={String(pageSize)} onchange={handlePageSizeChange}>
-							{#each pageSizes as size (size)}
-								<option value={String(size)}>{size}</option>
-							{/each}
-						</select>
+						<Dropdown
+							value={String(pageSize)}
+							options={pageSizes}
+							ariaLabel="Rows per page"
+							change={handleDropdownChange}
+						/>
 					</div>
-
 					<span class="page-info">Page {currentPage + 1} of {totalPages}</span>
 
 					<div class="page-buttons">
@@ -267,6 +273,39 @@
 </div>
 
 <style>
+	/* Table base */
+	table {
+		width: 100%;
+		border-collapse: collapse;
+		font-size: 0.875rem;
+	}
+
+	thead {
+		border-bottom: 1px solid var(--border);
+	}
+
+	th {
+		padding: 0.75rem 1rem;
+		font-weight: 500;
+		font-size: 0.8rem;
+		color: var(--text-muted);
+		white-space: nowrap;
+		user-select: none;
+		text-align: left;
+		background: transparent;
+	}
+
+	td {
+		padding: 0.75rem 1rem;
+		color: var(--text);
+		border-bottom: 1px solid var(--border);
+		white-space: nowrap;
+	}
+
+	tbody tr:last-child td {
+		border-bottom: none;
+	}
+
 	/* Header slot area */
 	.table-header {
 		padding: 1rem 1.25rem;

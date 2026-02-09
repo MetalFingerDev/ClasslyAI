@@ -152,6 +152,7 @@
 	main {
 		margin-left: var(--nav-width);
 		min-height: 100vh;
+		overflow-x: hidden;
 	}
 
 	@media (max-width: 600px) {

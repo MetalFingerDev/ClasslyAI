@@ -8,11 +8,29 @@ const config = {
 		csp: {
 			directives: {
 				'default-src': ['self'],
-				'script-src': ['self', 'unsafe-inline', 'https://www.youtube.com', 'https://s.ytimg.com', 'https://*.ytimg.com'],
+				'script-src': [
+					'self',
+					'unsafe-inline',
+					'https://www.youtube.com',
+					'https://s.ytimg.com',
+					'https://*.ytimg.com'
+				],
 				'style-src': ['self', 'unsafe-inline'],
-				'img-src': ['self', 'data:', 'https://www.youtube.com', 'https://i.ytimg.com', 'https://*.ytimg.com', 'https://*.googleusercontent.com'],
+				'img-src': [
+					'self',
+					'data:',
+					'https://www.youtube.com',
+					'https://i.ytimg.com',
+					'https://*.ytimg.com',
+					'https://*.googleusercontent.com'
+				],
 				'frame-src': ['https://www.youtube-nocookie.com', 'https://www.youtube.com'],
-				'connect-src': ['self', 'https://www.youtube.com', 'https://googleads.g.doubleclick.net', 'https://*.google.com'],
+				'connect-src': [
+					'self',
+					'https://www.youtube.com',
+					'https://googleads.g.doubleclick.net',
+					'https://*.google.com'
+				],
 				'font-src': ['self', 'data:'],
 				'object-src': ['none'],
 				'base-uri': ['self'],

@@ -115,11 +115,6 @@
 <!------ /HTML ------>
 
 <style>
-	header {
-		padding-top: 4rem;
-		padding-bottom: 3rem;
-	}
-
 	.cta {
 		padding-top: 3rem;
 		padding-bottom: 4rem;
