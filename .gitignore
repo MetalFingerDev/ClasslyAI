@@ -48,6 +48,9 @@ lerna-debug.log*
 # Coverage / test artifacts
 coverage/
 .nyc_output/
+
+# Assets
+/src/lib/assets/*
 playwright-report/
 cypress/videos/
 cypress/screenshots/

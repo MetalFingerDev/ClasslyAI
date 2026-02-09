@@ -5,6 +5,7 @@
 
 	import ThemeSwitcher from '$lib/components/ThemeSwitcher.svelte';
 
+	import { resolve } from '$app/paths';
 	import Fa from 'svelte-fa';
 	import {
 		faHome,
@@ -14,21 +15,21 @@
 		faCog
 	} from '@fortawesome/free-solid-svg-icons';
 
-	let {
-		links = [
-			{ name: 'Home', path: '/', icon: faHome },
-			{ name: 'Dashboard', path: '/dashboard', icon: faTachometerAlt },
-			{ name: 'Quizzes', path: '/quizzes', icon: faQuestionCircle },
-			{ name: 'About', path: '/about', icon: faInfoCircle }
-		],
-		children
-	}: { links: App.Link[]; children: Snippet } = $props();
+	const links: App.Link[] = [
+		{ name: 'Home', path: '/', icon: faHome },
+		{ name: 'Dashboard', path: '/dashboard', icon: faTachometerAlt },
+		{ name: 'Quizzes', path: '/quizzes', icon: faQuestionCircle },
+		{ name: 'About', path: '/about', icon: faInfoCircle }
+	];
+
+	let { children }: { children: Snippet } = $props();
 </script>
 
 <!------ HTML ------>
 
 <svelte:head>
 	<link rel="icon" href={favicon} />
+	<title>Quizzes — ClasslyAI</title>
 </svelte:head>
 
 <aside>
@@ -36,7 +37,7 @@
 		<ul>
 			{#each links as link (link.path)}
 				<li>
-					<a href={link.path} aria-label={link.name}>
+					<a href={resolve(link.path as any)} aria-label={link.name}>
 						<Fa icon={link.icon} size="lg" />
 						<span>{link.name}</span>
 					</a>
@@ -122,7 +123,7 @@
 	footer button :global(svg) {
 		width: 1.25rem;
 		min-width: 1.25rem;
-		color: var(--icon-primary);
+		color: var(--icon);
 	}
 	nav a:hover :global(svg),
 	footer button:hover :global(svg) {

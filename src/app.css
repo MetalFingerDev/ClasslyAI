@@ -16,7 +16,7 @@
 	--text: #0f172a;
 	--text-muted: #64748b;
 	--accent: #2563eb; /* primary blue */
-	--icon-primary: #7c3aed; /* complementary purple for icons */
+	--icon: #7c3aed; /* complementary purple for icons */
 	--surface: rgba(14, 67, 192, 0.04);
 	--border: rgba(15, 23, 42, 0.08);
 
@@ -47,7 +47,7 @@ html.dark {
 	--text: #e2e8f0;
 	--text-muted: rgba(226, 232, 240, 0.65);
 	--accent: #60a5fa;
-	--icon-primary: #ff7eee;
+	--icon: #ff7eee;
 	--surface: rgba(255, 255, 255, 0.03);
 	--border: rgba(255, 255, 255, 0.06);
 	--card-bg: rgba(17, 24, 39, 0.6);
@@ -65,7 +65,7 @@ html.solar {
 	--text: #35535c;
 	--text-muted: rgba(53, 83, 92, 0.65);
 	--accent: #b58900;
-	--icon-primary: #576e75;
+	--icon: #576e75;
 	--surface: rgba(245, 238, 216, 0.6);
 	--border: rgba(99, 77, 35, 0.08);
 	--card-bg: rgba(255, 250, 240, 0.9);
@@ -102,9 +102,76 @@ body {
 body::-webkit-scrollbar {
 	width: 0.25rem;
 }
-body::-webkit-scrollbar-track{
+body::-webkit-scrollbar-track {
 	background: red;
 }
-body::-webkit-scrollbar-thumb{
-background: yellowgreen;
+body::-webkit-scrollbar-thumb {
+	background: yellowgreen;
+}
+
+/* ===== Shared Component Styles ===== */
+
+/* Buttons */
+.btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	padding: 0.6rem 1.3rem;
+	border-radius: 8px;
+	font-weight: 600;
+	text-decoration: none;
+	border: none;
+	cursor: pointer;
+}
+.btn-primary {
+	background: var(--accent);
+	color: #fff;
+}
+.btn-primary:hover {
+	filter: brightness(1.1);
+}
+.btn-ghost {
+	background: transparent;
+	color: var(--text);
+	border: 1px solid var(--border);
+}
+.btn-ghost:hover {
+	background: var(--surface);
+}
+
+/* Hero badge */
+.hero-badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	font-size: 0.8rem;
+	color: var(--accent);
+	background: var(--surface);
+	border: 1px solid var(--border);
+	border-radius: 999px;
+	padding: 0.3rem 0.85rem;
+	margin-bottom: 1.5rem;
+}
+
+/* Hero heading */
+.hero h1 {
+	font-size: clamp(2.2rem, 5vw, 3.25rem);
+	font-weight: 800;
+	line-height: 1.15;
+	letter-spacing: -0.02em;
+}
+.hero h1 em {
+	font-style: normal;
+	background: linear-gradient(135deg, var(--icon-primary), var(--accent));
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+}
+
+/* Subtitle */
+.subtitle {
+	margin-top: 1.25rem;
+	color: var(--text-muted);
+	max-width: 500px;
+	line-height: 1.7;
 }

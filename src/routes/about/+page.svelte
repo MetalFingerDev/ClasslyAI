@@ -8,6 +8,7 @@
 		faHeart,
 		faArrowRight
 	} from '@fortawesome/free-solid-svg-icons';
+	import { resolve } from '$app/paths';
 
 	const values = [
 		{
@@ -27,10 +28,6 @@
 		}
 	];
 </script>
-
-<svelte:head>
-	<title>About — ClasslyAI</title>
-</svelte:head>
 
 <!-- Hero -->
 <section class="hero">
@@ -59,7 +56,7 @@
 <section class="values">
 	<h2>What we stand for</h2>
 	<div class="values-grid">
-		{#each values as v}
+		{#each values as v (v.title)}
 			<Card title={v.title}>
 				{#snippet content()}
 					<div class="value-body">
@@ -76,7 +73,7 @@
 <section class="cta">
 	<h2>Ready to try it?</h2>
 	<p>Jump in and start your first AI-powered study session — it only takes a minute.</p>
-	<a href="/dashboard" class="btn btn-primary">
+	<a href={resolve('/dashboard')} class="btn btn-primary">
 		Get Started
 		<Fa icon={faArrowRight} />
 	</a>
@@ -119,39 +116,6 @@
 		margin-bottom: 2rem;
 	}
 
-	/* Hero */
-	.hero-badge {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.4rem;
-		font-size: 0.8rem;
-		color: var(--accent);
-		background: var(--surface);
-		border: 1px solid var(--border);
-		border-radius: 999px;
-		padding: 0.3rem 0.85rem;
-		margin-bottom: 1.5rem;
-	}
-	h1 {
-		font-size: clamp(2.2rem, 5vw, 3.25rem);
-		font-weight: 800;
-		line-height: 1.15;
-		letter-spacing: -0.02em;
-	}
-	h1 em {
-		font-style: normal;
-		background: linear-gradient(135deg, var(--icon-primary), var(--accent));
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-clip: text;
-	}
-	.subtitle {
-		margin-top: 1.25rem;
-		color: var(--text-muted);
-		max-width: 500px;
-		line-height: 1.7;
-	}
-
 	/* Mission */
 	.mission p {
 		color: var(--text-muted);
@@ -183,26 +147,6 @@
 	.value-body p {
 		color: var(--text-muted);
 		font-size: 0.92rem;
-	}
-
-	/* Buttons */
-	.btn {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.4rem;
-		padding: 0.6rem 1.3rem;
-		border-radius: 8px;
-		font-weight: 600;
-		text-decoration: none;
-		border: none;
-		cursor: pointer;
-	}
-	.btn-primary {
-		background: var(--accent);
-		color: #fff;
-	}
-	.btn-primary:hover {
-		filter: brightness(1.1);
 	}
 
 	/* CTA */

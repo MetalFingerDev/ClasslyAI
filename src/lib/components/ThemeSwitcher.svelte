@@ -1,37 +1,51 @@
 <script lang="ts">
-	let theme = $state<'light' | 'dark'>('light');
+	import { browser } from '$app/environment';
+	import { untrack } from 'svelte';
 
-	// On mount: read saved preference or system preference
-	$effect(() => {
+	type Theme = 'light' | 'dark' | 'solar';
+
+	const THEMES: Theme[] = ['light', 'dark', 'solar'];
+	const THEME_ICONS: Record<Theme, string> = {
+		light: '☀️',
+		dark: '🌙',
+		solar: '🌤️'
+	};
+
+	let theme = $state<Theme>(getTheme());
+
+	/** Determine initial theme from localStorage / system preference (SSR-safe). */
+	function getTheme(): Theme {
+		if (!browser) return 'light';
 		const stored = localStorage.getItem('theme');
-		if (stored === 'dark' || stored === 'light') {
-			theme = stored;
-		} else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-			theme = 'dark';
-		}
+		if (stored === 'dark' || stored === 'light' || stored === 'solar') return stored;
+		if (window.matchMedia('(prefers-color-scheme: dark)').matches) return 'dark';
+		return 'light';
+	}
 
-		// Return a cleanup that does nothing — ensures effect only runs on mount).
-		return () => {};
-	});
-
-	// Sync DOM + storage whenever theme changes
+	// Sync DOM class + localStorage whenever theme changes (browser-only)
 	$effect(() => {
-		document.documentElement.classList.toggle('dark', theme === 'dark');
-		localStorage.setItem('theme', theme);
+		if (!browser) return;
+
+		const current = theme; // track `theme`
+
+		untrack(() => {
+			const root = document.documentElement;
+			root.classList.remove('dark', 'solar');
+			if (current !== 'light') {
+				root.classList.add(current);
+			}
+			localStorage.setItem('theme', current);
+		});
 	});
 
 	function toggleTheme(): void {
-		theme = theme === 'dark' ? 'light' : 'dark';
+		const i = THEMES.indexOf(theme);
+		theme = THEMES[(i + 1) % THEMES.length];
 	}
 </script>
 
-<button
-	class="theme-toggle"
-	aria-pressed={theme === 'dark'}
-	aria-label="Toggle color theme"
-	onclick={toggleTheme}
->
-	{theme === 'dark' ? '🌙' : '☀️'}
+<button class="theme-toggle" aria-label="Toggle color theme ({theme})" onclick={toggleTheme}>
+	{THEME_ICONS[theme]}
 </button>
 
 <style>

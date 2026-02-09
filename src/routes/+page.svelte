@@ -9,6 +9,7 @@
 		faRobot,
 		faGraduationCap
 	} from '@fortawesome/free-solid-svg-icons';
+	import { resolve } from '$app/paths';
 
 	const steps = [
 		{
@@ -30,10 +31,6 @@
 	];
 </script>
 
-<svelte:head>
-	<title>ClasslyAI — AI-Powered Learning</title>
-</svelte:head>
-
 <!-- Hero -->
 <section class="hero">
 	<div class="hero-badge">
@@ -46,11 +43,11 @@
 		by AI so you can focus on actually learning.
 	</p>
 	<div class="hero-actions">
-		<a href="/dashboard" class="btn btn-primary">
+		<a href={resolve('/dashboard')} class="btn btn-primary">
 			Get Started
 			<Fa icon={faArrowRight} />
 		</a>
-		<a href="/about" class="btn btn-ghost">Learn More</a>
+		<a href={resolve('/about')} class="btn btn-ghost">Learn More</a>
 	</div>
 </section>
 
@@ -100,7 +97,7 @@
 <section class="how-it-works">
 	<h2>How it works</h2>
 	<ol class="steps">
-		{#each steps as step, index}
+		{#each steps as step, index (step.title)}
 			<li>
 				<span class="step-num">{index + 1}</span>
 				<div>
@@ -117,7 +114,7 @@
 	<Fa icon={faGraduationCap} size="2x" />
 	<h2>Ready to level up?</h2>
 	<p>Jump into your dashboard and start your first AI study session.</p>
-	<a href="/dashboard" class="btn btn-primary">
+	<a href={resolve('/dashboard')} class="btn btn-primary">
 		Open Dashboard
 		<Fa icon={faArrowRight} />
 	</a>
@@ -161,71 +158,12 @@
 	}
 
 	/* Hero */
-	.hero-badge {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.4rem;
-		font-size: 0.8rem;
-		color: var(--accent);
-		background: var(--surface);
-		border: 1px solid var(--border);
-		border-radius: 999px;
-		padding: 0.3rem 0.85rem;
-		margin-bottom: 1.5rem;
-	}
-	h1 {
-		font-size: clamp(2.2rem, 5vw, 3.25rem);
-		font-weight: 800;
-		line-height: 1.15;
-		letter-spacing: -0.02em;
-	}
-	h1 em {
-		font-style: normal;
-		background: linear-gradient(135deg, var(--icon-primary), var(--accent));
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-clip: text;
-	}
-	.subtitle {
-		margin-top: 1.25rem;
-		color: var(--text-muted);
-		max-width: 500px;
-		line-height: 1.7;
-	}
 	.hero-actions {
 		display: flex;
 		gap: 0.75rem;
 		margin-top: 2rem;
 		flex-wrap: wrap;
 		justify-content: center;
-	}
-
-	/* Buttons */
-	.btn {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.4rem;
-		padding: 0.6rem 1.3rem;
-		border-radius: 8px;
-		font-weight: 600;
-		text-decoration: none;
-		border: none;
-		cursor: pointer;
-	}
-	.btn-primary {
-		background: var(--accent);
-		color: #fff;
-	}
-	.btn-primary:hover {
-		filter: brightness(1.1);
-	}
-	.btn-ghost {
-		background: transparent;
-		color: var(--text);
-		border: 1px solid var(--border);
-	}
-	.btn-ghost:hover {
-		background: var(--surface);
 	}
 
 	/* Features */
