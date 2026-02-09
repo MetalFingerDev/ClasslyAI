@@ -46,11 +46,11 @@
 		</ul>
 	</nav>
 	<footer>
-		<button aria-label="Settings">
+		<div class="settings" aria-label="Settings">
 			<Fa icon={faCog} size="lg" />
 			<span>Settings</span>
 			<ThemeSwitcher />
-		</button>
+		</div>
 	</footer>
 </aside>
 <main>
@@ -97,7 +97,7 @@
 	}
 
 	nav a,
-	footer button {
+	footer .settings {
 		display: flex;
 		align-items: center;
 		gap: 1rem;
@@ -114,19 +114,19 @@
 		white-space: nowrap;
 	}
 	nav a:hover,
-	footer button:hover {
+	footer .settings:hover {
 		background: var(--nav-link-hover);
 		color: var(--accent);
 	}
 
 	nav a :global(svg),
-	footer button :global(svg) {
+	footer .settings :global(svg) {
 		width: 1.25rem;
 		min-width: 1.25rem;
 		color: var(--icon);
 	}
 	nav a:hover :global(svg),
-	footer button:hover :global(svg) {
+	footer .settings:hover :global(svg) {
 		color: var(--accent);
 	}
 

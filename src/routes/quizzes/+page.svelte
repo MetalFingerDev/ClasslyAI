@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import { untrack } from 'svelte';
+	import type { SubmitFunction } from '@sveltejs/kit';
 	import Card from '$lib/components/Card.svelte';
 
 	let { form } = $props();
@@ -12,17 +14,36 @@
 
 	let selectedAnswers = $state<Record<number, string>>({});
 	let activeTab = $state<'questions' | 'results'>('questions');
+	let loading = $state(false);
 
 	// Reset selections when new questions arrive
 	$effect(() => {
-		if (questions.length > 0 && !submitted) {
-			selectedAnswers = {};
-			activeTab = 'questions';
-		}
-		if (submitted) {
-			activeTab = 'results';
-		}
+		const hasQuestions = questions.length > 0;
+		const isSubmitted = submitted;
+
+		untrack(() => {
+			if (hasQuestions && !isSubmitted) {
+				selectedAnswers = {};
+				activeTab = 'questions';
+			}
+			if (isSubmitted) {
+				activeTab = 'results';
+			}
+		});
 	});
+
+	// Stable reference — NOT recreated on every render
+	const handleEnhance: SubmitFunction = ({ cancel }) => {
+		if (loading) {
+			cancel();
+			return;
+		}
+		loading = true;
+		return async ({ update }) => {
+			loading = false;
+			await update({ reset: false, invalidateAll: false });
+		};
+	};
 </script>
 
 <!-------- HTML -------->
@@ -30,15 +51,18 @@
 <section class="quiz-page">
 	<h1>Quizzes</h1>
 
-	<form method="POST" action="?/generate" use:enhance class="generate-form">
+	<form method="POST" action="?/generate" use:enhance={handleEnhance} class="generate-form">
 		<input
 			name="topic"
 			type="text"
 			placeholder="e.g. Photosynthesis, World War II, Linear Algebra…"
 			value={form?.topic ?? ''}
 			required
+			disabled={loading}
 		/>
-		<button type="submit" class="btn btn-primary">Generate Quiz</button>
+		<button type="submit" class="btn btn-primary" disabled={loading}>
+			{loading ? 'Generating…' : 'Generate Quiz'}
+		</button>
 	</form>
 
 	{#if error}
@@ -71,7 +95,7 @@
 
 		<!-- Questions tab -->
 		{#if activeTab === 'questions'}
-			<form method="POST" action="?/submit" use:enhance>
+			<form method="POST" action="?/submit" use:enhance={handleEnhance}>
 				<input type="hidden" name="questions" value={JSON.stringify(questions)} />
 				<input type="hidden" name="answers" value={JSON.stringify(selectedAnswers)} />
 

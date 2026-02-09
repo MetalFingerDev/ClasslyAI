@@ -8,8 +8,23 @@ export interface QuizQuestion {
 	answer: string;
 }
 
+// Server-side rate limiter — blocks rapid-fire calls regardless of what the browser does
+let lastGenerateTime = 0;
+const MIN_INTERVAL_MS = 10_000; // at least 10 seconds between API calls
+
 export const actions = {
 	generate: async ({ request }) => {
+		const now = Date.now();
+		if (now - lastGenerateTime < MIN_INTERVAL_MS) {
+			const waitSec = Math.ceil((MIN_INTERVAL_MS - (now - lastGenerateTime)) / 1000);
+			console.warn(`Rate limiter: blocked duplicate call. Wait ${waitSec}s.`);
+			return fail(429, {
+				error: `Too many requests. Please wait ${waitSec} seconds before trying again.`,
+				topic: ''
+			});
+		}
+		lastGenerateTime = now;
+
 		const questions = await request.formData();
 		const topic = questions.get('topic');
 

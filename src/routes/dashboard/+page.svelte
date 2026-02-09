@@ -6,7 +6,47 @@
 	import tank from '$lib/assets/tank.jpg';
 	import water from '$lib/assets/water.jpg';
 	import jif from '$lib/assets/bwolfie.gif';
+	import Table from '$lib/components/Table.svelte';
+
+	// Sample data for the table
+	const columns = [
+		{ key: 'name', label: 'Student Name' },
+		{ key: 'course', label: 'Course' },
+		{ key: 'grade', label: 'Grade' },
+		{ key: 'attendance', label: 'Attendance', sortable: true },
+		{ key: 'status', label: 'Status' }
+	];
+
+	const tableData = [
+		{
+			name: 'Alice Johnson',
+			course: 'Mathematics',
+			grade: 'A',
+			attendance: '95%',
+			status: 'Active'
+		},
+		{ name: 'Bob Smith', course: 'Physics', grade: 'B+', attendance: '88%', status: 'Active' },
+		{
+			name: 'Charlie Brown',
+			course: 'Chemistry',
+			grade: 'A-',
+			attendance: '92%',
+			status: 'Active'
+		},
+		{ name: 'Diana Prince', course: 'Biology', grade: 'A+', attendance: '98%', status: 'Active' },
+		{
+			name: 'Ethan Hunt',
+			course: 'Computer Science',
+			grade: 'B',
+			attendance: '85%',
+			status: 'Active'
+		},
+		{ name: 'Fiona Green', course: 'English', grade: 'A', attendance: '90%', status: 'Active' },
+		{ name: 'George Wilson', course: 'History', grade: 'B-', attendance: '80%', status: 'Inactive' }
+	];
 </script>
+
+<!------ HTML ------>
 
 <div>header for dashboard</div>
 <div id="container">
@@ -30,7 +70,10 @@
 	<img src={graph} alt="Total Visitors graph" />
 </div>
 <div>menu</div>
-<div>table</div>
+<Table {columns} data={tableData} />
+<div>footer</div>
+
+<!------ /HTML ------>
 
 <style>
 	/* border and padding for debudding */

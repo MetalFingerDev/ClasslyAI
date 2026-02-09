@@ -8,7 +8,16 @@ export interface QuizQuestion {
 	answer: string;
 }
 
+let lastCallTime = 0;
+const MIN_INTERVAL_MS = 10_000;
+
 export const POST: RequestHandler = async ({ request }) => {
+	const now = Date.now();
+	if (now - lastCallTime < MIN_INTERVAL_MS) {
+		error(429, 'Too many requests. Please wait before trying again.');
+	}
+	lastCallTime = now;
+
 	const body = await request.json();
 	const topic = body.topic;
 	const count = body.count ?? 5;
