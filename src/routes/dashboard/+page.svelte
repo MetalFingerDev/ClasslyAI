@@ -11,6 +11,8 @@
 	import tank from '$lib/assets/tank.jpg';
 	import water from '$lib/assets/water.jpg';
 	import jif from '$lib/assets/bwolfie.gif';
+	import wall from '$lib/assets/wall.jpg';
+	import laila from '$lib/assets/laila.webp';
 
 	// ── Icon paths ──
 	const PLUS = 'M12 5v14M5 12h14';
@@ -164,7 +166,7 @@
 
 <div class="media-row">
 	<div class="media-grid">
-		{#each [biki, owo, red, tank, water, jif] as src, i (i)}
+		{#each [biki, owo, red, tank, water, jif, wall, laila] as src, i (i)}
 			<div class="media-card"><img {src} alt="media-{i}" /></div>
 		{/each}
 		<div class="media-card">
@@ -173,6 +175,8 @@
 				src="https://www.youtube-nocookie.com/embed/w5VFOKKAbQQ?list=RDw5VFOKKAbQQ"
 				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 				allowfullscreen
+				loading="lazy"
+				referrerpolicy="strict-origin-when-cross-origin"
 			></iframe>
 		</div>
 	</div>
@@ -265,15 +269,13 @@
 
 	/* Scroll strip overrides */
 	.media-grid {
-		display: flex;
-		gap: 0.5rem;
-		overflow-x: auto;
-		overflow-y: hidden;
-		scroll-snap-type: x proximity;
-		scroll-behavior: smooth;
-		overscroll-behavior-x: contain;
 		padding: 0.5rem;
-		min-height: 200px;
+		gap: 0.5rem;
+
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+		height: 440px;
+		overflow-y: auto;
 	}
 
 	/* Hide scrollbar for Chrome, Safari and Opera */
@@ -310,7 +312,7 @@
 	.todo-card {
 		display: flex;
 		flex-direction: column;
-		max-height: 400px;
+		height: 440px;
 	}
 
 	.todo-list {
@@ -327,8 +329,10 @@
 			height: 180px;
 		}
 
+		.media-grid,
 		.todo-card {
-			max-height: none;
+			height: auto;
+			max-height: 500px;
 		}
 	}
 </style>
