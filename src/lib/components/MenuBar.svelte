@@ -14,8 +14,9 @@
 		legend
 	} = $props();
 
-	let classes = $derived([classAttr, classNameProp, 'menubar', 'toolbar'].filter(Boolean).join(' '));
-
+	let classes = $derived(
+		[classAttr, classNameProp, 'menubar', 'toolbar'].filter(Boolean).join(' ')
+	);
 </script>
 
 <form
