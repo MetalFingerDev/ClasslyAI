@@ -2,7 +2,7 @@ import { env } from '$env/dynamic/private';
 import { GoogleGenAI } from '@google/genai';
 
 function getGemini() {
-	const apiKey = env.GEMINI_API_KEY;;
+	const apiKey = env.GEMINI_API_KEY;
 	if (!apiKey) {
 		throw new Error('GEMINI_API_KEY is not set. Add it to your .env file.');
 	}
@@ -14,19 +14,58 @@ function getGemini() {
  *
  *
  */
-export async function generateText(prompt: string): Promise<string> {
+export async function generateText(
+	prompt: string,
+	opts?: { maxAttempts?: number; baseDelayMs?: number }
+): Promise<string> {
 	const gemini = getGemini();
-	const response = await gemini.models.generateContent({
-		model: 'gemini-3-flash-preview',
-		contents: prompt
-	});
-	if (!response.text) {
-		throw new Error('Gemini didnt return a response');
-	}
-	return response.text;
-}
+	const model = env.GEMINI_MODEL ?? 'gemini-3-flash-preview';
+	const maxAttempts = opts?.maxAttempts ?? 5;
+	const baseDelay = opts?.baseDelayMs ?? 300; // ms
+	let attempt = 0;
 
-generateText('photosynthesis');
+	function sleep(ms: number) {
+		return new Promise((resolve) => setTimeout(resolve, ms));
+	}
+
+	while (true) {
+		attempt++;
+		try {
+			const response = await gemini.models.generateContent({
+				model,
+				contents: prompt
+			});
+
+			if (!response.text) {
+				throw new Error('Gemini did not return a response');
+			}
+			return response.text;
+		} catch (err) {
+			const e = err as unknown as {
+				status?: number;
+				code?: number;
+				message?: string;
+				error?: { code?: number };
+			};
+			const retryable =
+				e?.status === 503 ||
+				e?.code === 503 ||
+				e?.message?.toString().toLowerCase().includes('high demand') ||
+				(e?.error && e.error.code === 503);
+
+			if (!retryable || attempt >= maxAttempts) {
+				throw err;
+			}
+
+			const jitter = Math.random() * 300;
+			const backoff = Math.pow(2, attempt - 1) * baseDelay + jitter;
+			console.warn(
+				`Gemini request failed (attempt ${attempt}/${maxAttempts}). Retrying in ${Math.round(backoff)}ms.`
+			);
+			await sleep(backoff);
+		}
+	}
+}
 
 /**
  * Send a prompt to Gemini and parse the response as JSON.
